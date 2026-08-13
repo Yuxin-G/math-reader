@@ -1,0 +1,13 @@
+# 阶段 0-2 只需要这三个。后面阶段用到什么再加什么，
+# 不要一开始就把 torch / fastapi 全装上。
+pymupdf>=1.24          # PDF 文字提取（带坐标）、页面渲染、章节目录
+anthropic>=0.69        # Claude API，结构化输出 + 视觉输入
+python-dotenv>=1.0     # 从 .env 读 API key
+
+# 阶段 3 语义检索时再取消注释：
+# sentence-transformers>=3.0
+# numpy>=1.26
+
+# 阶段 4 加 Web 后端时再取消注释：
+# fastapi>=0.115
+# uvicorn[standard]>=0.32

@@ -1,0 +1,18 @@
+# --- 密钥：绝对不能进仓库 ---
+.env
+
+# --- 环境与缓存：体积大且可重建 ---
+.venv/
+__pycache__/
+*.pyc
+
+# --- 数据：可从原始 PDF 重新生成，或有版权 ---
+data/pdfs/*
+data/pages/
+data/*.db
+
+# --- macOS ---
+.DS_Store
+
+# 保留目录结构本身（git 不追踪空目录，靠 .gitkeep 占位）
+!data/pdfs/.gitkeep

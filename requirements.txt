@@ -9,5 +9,5 @@ python-dotenv>=1.0     # 从 .env 读 API key
 # numpy>=1.26
 
 # 阶段 4 加 Web 后端时再取消注释：
-# fastapi>=0.115
-# uvicorn[standard]>=0.32
+fastapi>=0.115
+uvicorn[standard]>=0.32

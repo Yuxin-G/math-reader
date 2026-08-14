@@ -10,6 +10,7 @@ __pycache__/
 data/pdfs/*
 data/pages/
 data/*.db
+docs/
 
 # --- macOS ---
 .DS_Store

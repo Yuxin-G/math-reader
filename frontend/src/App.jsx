@@ -17,6 +17,11 @@ function App() {
 
   const [numPages, setNumPages] = useState(null)
   const [pageWidth, setPageWidth] = useState(800)
+  const [selectedContent, setSelectedContent] = useState({
+    text: '',
+    startPage: null,
+    endPage: null,
+  })
 
   useEffect(() => {
     const viewer = viewerRef.current
@@ -43,28 +48,113 @@ function App() {
     setNumPages(numPages)
   }
 
+  function getPageNumber(node) {
+    if (!node) {
+      return null
+    }
+
+    const element =
+      node.nodeType === Node.ELEMENT_NODE
+        ? node
+        : node.parentElement
+    
+    const pageWrapper = element?.closest('.pdf-page-wrapper')
+
+    return pageWrapper?.dataset.pageNumber ?? null
+  }
+
+  function handleTextSelection() {
+    const selection = window.getSelection()
+
+    if (!selection || selection.rangeCount === 0) {
+      return
+    }
+
+    const selectedText = selection.toString().trim()
+
+    if (!selectedText) {
+      return
+    }
+
+    const range = selection.getRangeAt(0)
+
+    const startPage = getPageNumber(range.startContainer)
+    const endPage = getPageNumber(range.endContainer)
+
+    if (!startPage || !endPage) {
+      return
+    }
+
+    setSelectedContent({
+      text: selectedText,
+      startPage: Number(startPage),
+      endPage: Number(endPage),
+    })
+  }
   return (
     <main className="app-layout">
-      <section ref={viewerRef} className="pdf-panel">
+      <section 
+        ref={viewerRef} 
+        className="pdf-panel"
+        onMouseUp={handleTextSelection}
+      >
         <Document
           file={PDF_URL}
           onLoadSuccess={handleLoadSuccess}
           loading={<p>Loading PDF...</p>}
           error={<p>Failure to load PDF</p>}
         >
-          {Array.from({ length: numPages ?? 0}, (_, index) => (
-            <Page
-              key={index + 1}
-              pageNumber={index + 1}
-              width={pageWidth}
-            />
-          ))}
+          {Array.from({ length: numPages ?? 0}, (_, index) => {
+            const pageNumber = index + 1
+
+            return (
+              <div
+                key={pageNumber}
+                className="pdf-page-wrapper"
+                data-page-number={pageNumber}
+              >
+                <Page
+                  pageNumber={pageNumber}
+                  width={pageWidth}
+                />
+              </div>
+            )
+          })}
         </Document>
       </section>
 
       <aside className="side-panel">
-        <h2>Reading Assistant</h2>
-        <p>Utility needs to be developed.</p>
+        {/* Right upper corner: show selected PDF */}
+        <section className="side-section selection-panel">
+          <h2>Selected Contents</h2>
+
+          {selectedContent.text ? (
+            <div className="selected-content">
+              <div className="selected-page">
+                {selectedContent.startPage === selectedContent.endPage
+                  ? `Page ${selectedContent.startPage}`
+                  : `Pages ${selectedContent.startPage}-${selectedContent.endPage}`}
+              </div>
+
+              <div className='selected-text'>
+                {selectedContent.text} 
+              </div>
+            </div>
+          ) : (
+            <div className='selection-placeholder'>
+              Please select on the left hand side.
+            </div>
+          )}
+        </section>
+
+        {/* Right lower corner: notes, conversation and other utilities */}
+        <section className="side-section assistant-panel">
+          <h2>Contents Explaination</h2>
+          
+          <div className="assistant-placeholder">
+            Here will be the explaination later
+          </div>
+        </section>
       </aside>
     </main>
   )

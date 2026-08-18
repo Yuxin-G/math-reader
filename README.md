@@ -7,7 +7,6 @@
 | **Status** | Draft |
 | **Author** | Maxwell Gong |
 | **Last Update** | 2026-08-13 |
-|---|---|
 
 ## Project Motivation
 Nowadays, AI becomes a significant role in helping people understanding content on a book. 

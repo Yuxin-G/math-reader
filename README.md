@@ -3,10 +3,11 @@
 > A patient assistant helps you read a book with emphasis in Maths, Science related area.
 
 
+|||
 |---|---|
 | **Status** | Draft |
 | **Author** | Maxwell Gong |
-| **Last Update** | 2026-08-13 |
+| **Last Update** | 2026-08-17 |
 
 ## Project Motivation
 Nowadays, AI becomes a significant role in helping people understanding content on a book. 
